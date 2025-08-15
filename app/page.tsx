@@ -1,19 +1,24 @@
-// app/page.tsx
-import Navbar from "@/components/Navbar";
+// HomePage.jsx
+import HeroCarousel from "../components/hero/HeroCarousel";
+import TopCategories from "../components/categories/TopCategories";
+import FeaturedProducts from "@/components/FeaturedProducts";
+import BrandStory from "@/components/BrandStory";
+import Testimonials from "../components/testimonials/Testimonials";
+
+import InstagramGallery from "../components/instagram/InstagramGallery";
+import NewsletterSignup from "../components/newsletter/NewsletterSignup";
 
 export default function HomePage() {
   return (
     <div>
-      <main className="text-center mt-20">
-        <h1 className="text-4xl font-bold mb-4">Welcome to My E-Commerce</h1>
-        <p className="text-lg mb-6">Discover the best products for your needs.</p>
-        <a
-          href="/shop"
-          className="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-        >
-          Shop Now
-        </a>
-      </main>
+      <HeroCarousel />
+      <TopCategories />
+      <FeaturedProducts />
+      <BrandStory />
+      <Testimonials />
+      <InstagramGallery />
+      <NewsletterSignup />
+      {/* Next sections go here */}
     </div>
   );
 }
