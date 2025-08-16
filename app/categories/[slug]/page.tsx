@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ProductCard from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs"; // ⬅️ import it
+import Image from "next/image"; // ⬅️ add this at the top
 
 interface Product {
   id: number;
@@ -51,7 +52,7 @@ export default function CategoryPage() {
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold">{category.name}</h1>
         {category.image && (
-          <img
+          <Image
             src={category.image}
             alt={category.name}
             className="w-full h-60 object-cover rounded-xl mt-4"

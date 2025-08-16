@@ -4,6 +4,16 @@ import { useEffect, useState } from "react";
 import ProductCard, { Product as ProductType } from "@/components/ProductCard";
 import Breadcrumbs from "@/components/Breadcrumbs";
 
+// Define the API response type
+interface ProductAPI {
+  id: number;
+  name: string;
+  slug: string;
+  thumbnail?: string;
+  price: string | number;
+  original_price?: string | number | null;
+}
+
 export default function ShopPage() {
   const [products, setProducts] = useState<ProductType[]>([]);
 
@@ -12,10 +22,11 @@ export default function ShopPage() {
       try {
         const res = await fetch("http://localhost:8000/api/products/");
         if (!res.ok) throw new Error("Failed to fetch products");
-        const data = await res.json();
 
-        // ✅ map API data to match ProductCard interface
-        const mappedProducts: ProductType[] = data.map((p: any) => ({
+        const data: ProductAPI[] = await res.json();
+
+        // Map API data to match ProductCard interface
+        const mappedProducts: ProductType[] = data.map((p) => ({
           id: p.id,
           name: p.name,
           slug: p.slug,
@@ -29,6 +40,7 @@ export default function ShopPage() {
         console.error(err);
       }
     }
+
     fetchProducts();
   }, []);
 
