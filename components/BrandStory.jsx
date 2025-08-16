@@ -3,9 +3,13 @@ export default function BrandStory() {
     <section className="max-w-7xl mx-auto px-4 py-16 bg-gray-50">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Image or Illustration */}
-        <div className="h-64 md:h-96 w-full bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
-          Placeholder for Brand Image
-        </div>
+        <div className="h-64 md:h-96 w-full rounded-lg overflow-hidden">
+  <img
+    src="/images/brand.jpg"   // root-relative
+    alt="Brand"
+    className="w-full h-full object-cover"
+  />
+</div>
 
         {/* Text Content */}
         <div className="flex flex-col justify-center">

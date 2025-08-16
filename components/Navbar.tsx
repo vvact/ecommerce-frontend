@@ -15,7 +15,7 @@ export default function Navbar({ cartCount = 0 }: NavProps) {
 
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/products", label: "Shop" },
+    { href: "/shop", label: "Shop" },
   ];
 
   useEffect(() => {
