@@ -1,5 +1,5 @@
 // declarations.d.ts
-declare module "@heroicons/react/24/outline" {
+declare module "@heroicons/react" {
   import * as React from "react";
   export const ChevronRightIcon: React.FC<React.SVGProps<SVGSVGElement>>;
   export const MagnifyingGlassIcon: React.FC<React.SVGProps<SVGSVGElement>>;
