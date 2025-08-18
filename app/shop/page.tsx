@@ -1,64 +1,10 @@
-"use client";
+import ProductList from "@/components/ProductList";
 
-import { useEffect, useState } from "react";
-import ProductCard, { Product as ProductType } from "@/components/ProductCard";
-import Breadcrumbs from "@/components/Breadcrumbs";
-
-// Define the API response type
-interface ProductAPI {
-  id: number;
-  name: string;
-  slug: string;
-  thumbnail?: string;
-  price: string | number;
-  original_price?: string | number | null;
-}
-
-export default function ShopPage() {
-  const [products, setProducts] = useState<ProductType[]>([]);
-
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const res = await fetch("http://localhost:8000/api/products/");
-        if (!res.ok) throw new Error("Failed to fetch products");
-
-        const data: ProductAPI[] = await res.json();
-
-        // Map API data to match ProductCard interface
-        const mappedProducts: ProductType[] = data.map((p) => ({
-          id: p.id,
-          name: p.name,
-          slug: p.slug,
-          thumbnail: p.thumbnail || "/placeholder.jpg",
-          price: Number(p.price),
-          original_price: p.original_price ? Number(p.original_price) : undefined,
-        }));
-
-        setProducts(mappedProducts);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchProducts();
-  }, []);
-
+export default function HomePage() {
   return (
-    <div className="px-4 sm:px-8 md:px-16 py-6">
-      {/* Breadcrumbs */}
-      <Breadcrumbs items={[{ label: "Home", href: "/" }, { label: "Shop" }]} />
-
-      <h1 className="text-2xl font-semibold mb-6">Shop</h1>
-
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.length > 0 ? (
-          products.map((product) => <ProductCard key={product.id} product={product} />)
-        ) : (
-          <p>No products available.</p>
-        )}
-      </div>
-    </div>
+    <main className="container mx-auto py-8">
+      <h1 className="text-2xl font-bold mb-6">All Products</h1>
+      <ProductList />
+    </main>
   );
 }

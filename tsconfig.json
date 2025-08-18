@@ -33,7 +33,16 @@
       ],
       "@/styles/*": [
         "styles/*"
-      ]
+      ],
+      "@/services/*": [
+        "services/*"
+      ],
+      "@/hooks/*": [
+        "hooks/*"
+      ],
+      "@/types/*": [
+        "types/*"
+      ],
     },
     "incremental": true,
     "plugins": [
@@ -46,7 +55,8 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "heroicons.d.ts"
   ],
   "exclude": [
     "node_modules"

@@ -2,7 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: custom styles */
+/* Font families */
+:root {
+  --font-heading: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-button: 'Montserrat', sans-serif;
+}
+
+/* Apply base fonts */
 body {
-  font-family: 'Poppins', sans-serif;
+  @apply font-body text-body text-gray-700;
+}
+
+/* Headings */
+h1 { @apply font-heading text-h1 font-extrabold; }
+h2 { @apply font-heading text-h2 font-bold; }
+h3 { @apply font-heading text-h3 font-bold; }
+h4 { @apply font-heading text-h4 font-semibold; }
+h5 { @apply font-heading text-h5 font-semibold; }
+h6 { @apply font-heading text-h6 font-medium; }
+
+/* Buttons */
+.btn-primary {
+  @apply font-button font-semibold text-white bg-black px-6 py-3 rounded-btn hover:bg-gray-800 transition;
+}
+.btn-secondary {
+  @apply font-button font-medium text-black bg-gray-200 px-4 py-2 rounded-btn hover:bg-gray-300 transition;
+}
+
+/* Breadcrumbs */
+.breadcrumb {
+  @apply font-body font-medium text-sm text-gray-500 flex space-x-2;
+}
+.breadcrumb span:last-child {
+  @apply text-black;
+}
+
+/* Optional: global link styles */
+a {
+  @apply text-gray-800 hover:text-black transition;
+}
+
+
+/* Add to globals.css for enhanced hover effects */
+.breadcrumb-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.breadcrumb-hover-effect:hover {
+  background: linear-gradient(to right, #0A192F08, #0A192F05);
+  transform: translateY(-1px);
 }

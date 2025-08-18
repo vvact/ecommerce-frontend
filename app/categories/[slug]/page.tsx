@@ -1,42 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "@/lib/store";
+import { fetchCategoryBySlug } from "@/features/categoriesSlice";
 import ProductCard from "@/components/ProductCard";
-import Breadcrumbs from "@/components/Breadcrumbs"; // ⬅️ import it
-import Image from "next/image"; // ⬅️ add this at the top
-
-interface Product {
-  id: number;
-  name: string;
-  slug: string;
-  thumbnail: string;
-  price: number;
-  original_price: number;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  slug: string;
-  image: string;
-  products: Product[];
-}
+import Breadcrumbs from "@/components/Breadcrumbs";
+import Image from "next/image";
 
 export default function CategoryPage() {
   const { slug } = useParams();
-  const [category, setCategory] = useState<Category | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+
+  // Convert slug to string if it's an array
+  const categorySlug = Array.isArray(slug) ? slug[0] : slug;
+
+  const { selectedCategory: category, categoryLoading: loading, categoryError: error } =
+    useSelector((state: RootState) => state.categories);
 
   useEffect(() => {
-    async function fetchCategory() {
-      const res = await fetch(`http://localhost:8000/api/categories/${slug}/`);
-      const data = await res.json();
-      setCategory(data);
+    if (categorySlug) {
+      dispatch(fetchCategoryBySlug(categorySlug));
     }
-    if (slug) fetchCategory();
-  }, [slug]);
+  }, [dispatch, categorySlug]);
 
-  if (!category) return <p className="text-center py-10">Loading...</p>;
+  if (loading) return <p className="text-center py-10">Loading...</p>;
+  if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
+  if (!category) return null;
 
   return (
     <div className="px-6 py-10">
@@ -44,7 +35,7 @@ export default function CategoryPage() {
       <Breadcrumbs
         items={[
           { label: "Categories", href: "/categories" },
-          { label: category.name }
+          { label: category.name },
         ]}
       />
 
@@ -55,13 +46,15 @@ export default function CategoryPage() {
           <Image
             src={category.image}
             alt={category.name}
+            width={500}
+            height={300}
             className="w-full h-60 object-cover rounded-xl mt-4"
           />
         )}
       </div>
 
       {/* Product grid */}
-      {category.products.length > 0 ? (
+      {category.products?.length ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {category.products.map((product) => (
             <ProductCard key={product.id} product={product} />
