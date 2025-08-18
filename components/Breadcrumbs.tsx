@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import Link from 'next/link';
+import { ChevronRightIcon } from '@heroicons/react/24/outline';
 
 export type BreadcrumbItem = {
   label: string;
@@ -28,12 +28,12 @@ export default function Breadcrumbs({ items }: BreadcrumbsProps) {
                 className="flex items-center group text-sm md:text-base"
               >
                 <span className="py-1 px-2 rounded-lg transition-all duration-200 group-hover:bg-[#0A192F]/5 group-hover:text-[#0A192F] text-gray-600">
-                  {item.label}
+                  {item.label.replace("'", "&apos;")}
                 </span>
               </Link>
             ) : (
               <span className="py-1 px-2 rounded-lg font-medium text-[#0A192F]">
-                {item.label}
+                {item.label.replace("'", "&apos;")}
               </span>
             )}
             
