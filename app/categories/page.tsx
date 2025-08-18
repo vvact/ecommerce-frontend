@@ -31,7 +31,6 @@ export default function CategoriesPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [dispatch, categories.length]);
 
-  // Filter categories based on search term
   const filteredCategories = categories.filter(cat => 
     cat.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -39,23 +38,16 @@ export default function CategoriesPage() {
   if (loading) return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="animate-pulse space-y-8">
-        {/* Breadcrumbs skeleton */}
         <div className="flex space-x-2">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="h-4 w-16 bg-gray-200 rounded"></div>
           ))}
         </div>
-        
-        {/* Header skeleton */}
         <div className="space-y-4">
           <div className="h-8 w-64 bg-gray-200 rounded"></div>
           <div className="h-4 w-80 bg-gray-200 rounded"></div>
         </div>
-        
-        {/* Search bar skeleton */}
         <div className="h-12 bg-gray-200 rounded-lg"></div>
-        
-        {/* Grid skeleton */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="aspect-square rounded-xl bg-gray-200"></div>
@@ -85,7 +77,6 @@ export default function CategoriesPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      {/* Floating search bar on scroll */}
       {isScrolled && (
         <motion.div 
           className="fixed top-0 left-0 right-0 bg-white z-30 shadow-md py-3 px-4"
@@ -109,7 +100,6 @@ export default function CategoriesPage() {
       )}
 
       <div className="px-4 py-8">
-        {/* Breadcrumbs */}
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -117,7 +107,6 @@ export default function CategoriesPage() {
           ]}
         />
 
-        {/* Premium Header */}
         <motion.div 
           className="text-center mb-10 relative py-6"
           initial={{ opacity: 0, y: 20 }}
@@ -128,10 +117,9 @@ export default function CategoriesPage() {
             Discover Our Collections
           </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Explore our premium categories curated with the finest products. Find exactly what you're looking for in our carefully organized collections.
+            Explore our premium categories curated with the finest products. Find exactly what you&apos;re looking for in our carefully organized collections.
           </p>
           
-          {/* Search Bar */}
           <div className="mt-8 max-w-2xl mx-auto relative">
             <input
               type="text"
@@ -142,8 +130,7 @@ export default function CategoriesPage() {
             />
             <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
           </div>
-          
-          {/* Category Stats */}
+
           <div className="mt-6 flex justify-center gap-6 flex-wrap">
             <div className="text-center px-4 py-2 bg-[#0A192F]/5 rounded-lg">
               <p className="text-2xl font-bold text-[#0A192F]">{categories.length}</p>
@@ -158,7 +145,6 @@ export default function CategoriesPage() {
           </div>
         </motion.div>
 
-        {/* Categories Grid */}
         {filteredCategories.length > 0 ? (
           <motion.div 
             className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6"
@@ -182,11 +168,7 @@ export default function CategoriesPage() {
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    
-                    {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0A192F]/90 to-transparent"></div>
-                    
-                    {/* Content */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                       <h3 className="font-bold text-lg truncate">{cat.name}</h3>
                       <div className="flex items-center justify-between mt-1">
@@ -198,8 +180,6 @@ export default function CategoriesPage() {
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Hover effect */}
                     <div className="absolute inset-0 border-2 border-[#D4AF37] rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                   </div>
                 </Link>
@@ -216,7 +196,7 @@ export default function CategoriesPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <h3 className="text-xl font-semibold text-[#0A192F] mb-2">No matching categories</h3>
-            <p className="text-gray-600 mb-6">Try adjusting your search to find what you're looking for</p>
+            <p className="text-gray-600 mb-6">Try adjusting your search to find what you&apos;re looking for</p>
             <button 
               onClick={() => setSearchTerm("")}
               className="px-4 py-2 bg-gradient-to-r from-[#0A192F] to-[#0F2A5A] text-white rounded-lg font-medium hover:opacity-90 transition-opacity"
@@ -226,7 +206,6 @@ export default function CategoriesPage() {
           </motion.div>
         )}
 
-        {/* Featured Collection Banner */}
         {filteredCategories.length > 0 && (
           <motion.div 
             className="mt-16 rounded-2xl overflow-hidden relative border border-gray-100 shadow-md"
@@ -256,7 +235,6 @@ export default function CategoriesPage() {
           </motion.div>
         )}
 
-        {/* Newsletter CTA */}
         <motion.div 
           className="mt-16 bg-gradient-to-r from-[#0A192F] to-[#0F2A5A] rounded-2xl p-8 text-center text-white"
           initial={{ opacity: 0 }}
