@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "res.cloudinary.com",
-        pathname: "/dizhnvo43/**", // your cloud name folder
+        pathname: "/dizhnvo43/**",
       },
     ],
   },
