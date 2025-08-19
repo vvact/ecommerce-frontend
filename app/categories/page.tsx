@@ -226,8 +226,8 @@ export default function CategoriesPage() {
               </Link>
             </div>
             <Image
-              src="/summer-banner.jpg"
-              alt="Summer Collection"
+              src="/men-accessories.jpg"
+              alt="Men's Accessories Collection"
               width={1200}
               height={400}
               className="w-full h-64 object-cover"
