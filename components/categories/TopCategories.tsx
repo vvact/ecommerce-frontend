@@ -16,29 +16,24 @@ export default function TopCategories() {
   );
 
   useEffect(() => {
-    if (categories.length === 0) {
+    if (!categories || categories.length === 0) {
       dispatch(fetchCategories());
     }
-  }, [dispatch, categories.length]);
+  }, [dispatch, categories]);
 
   // Mobile-optimized loading state
   if (loading) return (
     <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
       <div className="animate-pulse space-y-6">
-        {/* Breadcrumbs skeleton */}
         <div className="flex items-center gap-2 mb-6">
           <div className="h-4 w-16 bg-gray-200 rounded"></div>
           <ChevronRightIcon className="h-3 w-3 text-gray-300" />
           <div className="h-4 w-24 bg-gray-200 rounded"></div>
         </div>
-        
-        {/* Heading skeleton */}
         <div className="relative text-center mb-10">
           <div className="h-px bg-gray-200 absolute top-1/2 left-0 right-0"></div>
           <div className="h-8 w-64 bg-gray-200 rounded mx-auto relative inline-block px-6"></div>
         </div>
-        
-        {/* Grid skeleton */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
           {[...Array(8)].map((_, i) => (
             <div key={i} className="aspect-square rounded-xl bg-gray-200"></div>
@@ -73,14 +68,15 @@ export default function TopCategories() {
     </div>
   );
 
+  // Main render
   return (
-    <motion.section 
+    <motion.section
       className="max-w-7xl mx-auto px-4 py-8 sm:py-12"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
-      {/* Premium Breadcrumbs */}
+      {/* Breadcrumbs */}
       <div className="mb-6 sm:mb-8">
         <Breadcrumbs
           items={[
@@ -90,7 +86,7 @@ export default function TopCategories() {
         />
       </div>
 
-      {/* Premium Heading with Mobile Optimization */}
+      {/* Heading */}
       <div className="text-center mb-8 sm:mb-10 relative">
         <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent opacity-60 hidden sm:block"></div>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0A192F] relative inline-block px-4 sm:px-6 bg-white">
@@ -101,30 +97,36 @@ export default function TopCategories() {
         </p>
       </div>
 
-      {/* Enhanced Category Grid with Mobile-first Layout */}
+      {/* Category Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4 md:gap-5">
-        {categories.map((category: Category, index) => (
+        {(categories || []).map((category: Category, index) => (
           <motion.div
-            key={category.id}
+            key={category.id || index}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ 
-              duration: 0.3, 
+            transition={{
+              duration: 0.3,
               delay: index * 0.05,
-              ease: "easeOut"
+              ease: "easeOut",
             }}
-            whileHover={{ 
+            whileHover={{
               y: -5,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
             className="w-full"
           >
-            <CategoryCard category={category} />
+            <CategoryCard category={{
+              id: category.id || index,
+              name: category.name || "Unnamed Category",
+              slug: category.slug || "#",
+              image: category.image || "/placeholder.jpg",
+              product_count: category.product_count ?? 0,
+            }} />
           </motion.div>
         ))}
       </div>
 
-      {/* View All Button for Mobile */}
+      {/* View All Button */}
       <div className="mt-8 flex justify-center sm:hidden">
         <button className="px-5 py-2.5 bg-gradient-to-r from-[#0A192F] to-[#0F2A5A] text-white rounded-lg font-medium text-sm flex items-center">
           View All Categories
@@ -132,7 +134,7 @@ export default function TopCategories() {
         </button>
       </div>
 
-      {/* Premium Divider with Brand Accent */}
+      {/* Divider */}
       <div className="mt-10 sm:mt-14 h-px bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent"></div>
     </motion.section>
   );
