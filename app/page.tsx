@@ -1,7 +1,7 @@
 // HomePage.jsx
 import HeroCarousel from "../components/hero/HeroCarousel";
 import TopCategories from "../components/categories/TopCategories";
-import FeaturedProducts from "@/components/FeaturedProducts";
+import FeaturedSection from "@/components/FeaturedSection";
 import BrandStory from "@/components/BrandStory";
 import Testimonials from "../components/testimonials/Testimonials";
 
@@ -13,7 +13,7 @@ export default function HomePage() {
     <div>
       <HeroCarousel />
       <TopCategories />
-      <FeaturedProducts />
+      <FeaturedSection />
       <BrandStory />
       <Testimonials />
       <InstagramGallery />

@@ -24,40 +24,35 @@ export default function ProductCard({ product }: { product: Product }) {
   const hasDiscount = product.original_price && product.original_price > product.price;
 
   return (
-    <div className="border rounded-xl shadow-sm hover:shadow transition-all p-4 flex flex-col h-full">
-      {/* Product Image */}
-      <Link href={`/products/${product.slug}`} className="block mb-3">
-        <div className="relative w-full aspect-square bg-gray-50 rounded-lg overflow-hidden">
+    <div className="flex flex-col">
+      {/* Product Image - Focused area */}
+      <Link href={`/products/${product.slug}`} className="block mb-2">
+        <div className="relative w-full aspect-square bg-gray-50">
           <Image
             src={imageSrc}
             alt={product.name}
             fill
             sizes="(max-width: 768px) 50vw, 25vw"
-            className="object-contain hover:scale-[1.02] transition-transform"
+            className="object-contain transition-opacity hover:opacity-90"
             onError={() => setImageSrc(FALLBACK_THUMBNAIL)}
           />
         </div>
       </Link>
 
-      {/* Product Info */}
-      <div className="flex flex-col flex-grow">
+      {/* Product Info - Minimal text */}
+      <div className="text-center">
         <Link href={`/products/${product.slug}`}>
-          <h3 className="font-medium text-gray-800 hover:text-blue-600 line-clamp-2">
-            {product.name}
-          </h3>
+          <h3 className="text-gray-800 mb-1 font-medium">{product.name}</h3>
         </Link>
-
-        {/* Pricing */}
-        <div className="mt-2">
-          <span className="text-lg font-semibold text-gray-900">
+        
+        <div className="flex justify-center items-center gap-2">
+          <span className="text-gray-900 font-medium">
             KSh {product.price.toLocaleString()}
           </span>
           {hasDiscount && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500 line-through">
-                KSh {product.original_price?.toLocaleString()}
-              </span>
-            </div>
+            <span className="text-gray-500 text-sm line-through">
+              KSh {product.original_price?.toLocaleString()}
+            </span>
           )}
         </div>
       </div>

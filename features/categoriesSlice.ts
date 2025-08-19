@@ -31,12 +31,23 @@ interface CategoriesState {
   categoryError: string | null;
 }
 
+// Cloudinary base URL
+const CLOUDINARY_BASE = "https://res.cloudinary.com/dizhnvo43/";
+
 // Async thunk to fetch all categories
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
     const response = await api.get<Category[]>("/categories/");
-    return response.data;
+    // Prepend full Cloudinary URL to category image and product thumbnails
+    return response.data.map(category => ({
+      ...category,
+      image: `${CLOUDINARY_BASE}${category.image}`,
+      products: category.products?.map(product => ({
+        ...product,
+        thumbnail: `${CLOUDINARY_BASE}${product.thumbnail}`,
+      })),
+    }));
   }
 );
 
@@ -45,7 +56,15 @@ export const fetchCategoryBySlug = createAsyncThunk(
   "categories/fetchCategoryBySlug",
   async (slug: string) => {
     const response = await api.get<Category>(`/categories/${slug}/`);
-    return response.data;
+    const category = response.data;
+    return {
+      ...category,
+      image: `${CLOUDINARY_BASE}${category.image}`,
+      products: category.products?.map(product => ({
+        ...product,
+        thumbnail: `${CLOUDINARY_BASE}${product.thumbnail}`,
+      })),
+    };
   }
 );
 
@@ -62,10 +81,10 @@ const categoriesSlice = createSlice({
   name: "categories",
   initialState,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     // Fetch all categories
     builder
-      .addCase(fetchCategories.pending, (state) => {
+      .addCase(fetchCategories.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -80,7 +99,7 @@ const categoriesSlice = createSlice({
 
     // Fetch single category
     builder
-      .addCase(fetchCategoryBySlug.pending, (state) => {
+      .addCase(fetchCategoryBySlug.pending, state => {
         state.categoryLoading = true;
         state.categoryError = null;
       })
