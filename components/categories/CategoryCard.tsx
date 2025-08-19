@@ -3,22 +3,28 @@ import Image from "next/image";
 
 export interface Category {
   id: number;
-  name: string;
-  slug: string;
-  image: string;
-  product_count: number;
+  name?: string | null;
+  slug?: string | null;
+  image?: string | null;
+  product_count?: number;
 }
 
 export default function CategoryCard({ category }: { category: Category }) {
+  // Fallbacks
+  const name = category.name || "Unnamed Category";
+  const slug = category.slug || "#";
+  const image = category.image || "/placeholder.jpg"; // Local placeholder if Cloudinary fails
+  const productCount = category.product_count ?? 0;
+
   return (
     <Link 
-      href={`/categories/${category.slug}`}
+      href={`/categories/${slug}`}
       className="group relative block overflow-hidden rounded-xl transition-all duration-500 ease-out"
     >
       <div className="relative aspect-square overflow-hidden">
         <Image
-          src={category.image}
-          alt={category.name}
+          src={image}
+          alt={name}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           width={500}
           height={500}
@@ -34,11 +40,11 @@ export default function CategoryCard({ category }: { category: Category }) {
 
       <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
         <h3 className="text-xl font-bold tracking-tight mb-1 drop-shadow-md">
-          {category.name}
+          {name.replace("-", " ")}
         </h3>
         <div className="flex items-center gap-2">
           <span className="text-[#F9E076] font-medium text-sm">
-            {category.product_count} products
+            {productCount} products
           </span>
           <span className="flex-1 border-t border-[#F9E076]/50"></span>
           <svg 
