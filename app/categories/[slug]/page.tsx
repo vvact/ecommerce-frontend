@@ -42,15 +42,16 @@ export default function CategoryPage() {
       {/* Category header */}
       <div className="mb-10 text-center">
         <h1 className="text-3xl font-bold">{category.name}</h1>
-        {category.image && (
-          <Image
-            src={category.image}
-            alt={category.name}
-            width={500}
-            height={300}
-            className="w-full h-60 object-cover rounded-xl mt-4"
-          />
-        )}
+        {category.image?.startsWith("http") && (
+  <Image
+    src={category.image}
+    alt={category.name}
+    width={500}
+    height={300}
+    className="w-full h-60 object-cover rounded-xl mt-4"
+  />
+)}
+
       </div>
 
       {/* Product grid */}

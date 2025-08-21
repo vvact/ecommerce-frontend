@@ -6,7 +6,7 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
-  image: string;
+  image: string; // full URL from backend
   product_count: number;
   products?: Product[]; // optional for single category
 }
@@ -16,7 +16,7 @@ export interface Product {
   id: number;
   name: string;
   slug: string;
-  thumbnail: string;
+  thumbnail: string; // full URL from backend
   price: number;
   original_price?: number;
 }
@@ -31,23 +31,12 @@ interface CategoriesState {
   categoryError: string | null;
 }
 
-// Cloudinary base URL
-const CLOUDINARY_BASE = "https://res.cloudinary.com/dizhnvo43/";
-
 // Async thunk to fetch all categories
 export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async () => {
     const response = await api.get<Category[]>("/categories/");
-    // Prepend full Cloudinary URL to category image and product thumbnails
-    return response.data.map(category => ({
-      ...category,
-      image: `${CLOUDINARY_BASE}${category.image}`,
-      products: category.products?.map(product => ({
-        ...product,
-        thumbnail: `${CLOUDINARY_BASE}${product.thumbnail}`,
-      })),
-    }));
+    return response.data; // use backend URLs as-is
   }
 );
 
@@ -56,15 +45,7 @@ export const fetchCategoryBySlug = createAsyncThunk(
   "categories/fetchCategoryBySlug",
   async (slug: string) => {
     const response = await api.get<Category>(`/categories/${slug}/`);
-    const category = response.data;
-    return {
-      ...category,
-      image: `${CLOUDINARY_BASE}${category.image}`,
-      products: category.products?.map(product => ({
-        ...product,
-        thumbnail: `${CLOUDINARY_BASE}${product.thumbnail}`,
-      })),
-    };
+    return response.data; // use backend URLs as-is
   }
 );
 
@@ -82,8 +63,8 @@ const categoriesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: builder => {
-    // Fetch all categories
     builder
+      // Fetch all categories
       .addCase(fetchCategories.pending, state => {
         state.loading = true;
         state.error = null;
@@ -95,10 +76,9 @@ const categoriesSlice = createSlice({
       .addCase(fetchCategories.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch categories";
-      });
+      })
 
-    // Fetch single category
-    builder
+      // Fetch single category
       .addCase(fetchCategoryBySlug.pending, state => {
         state.categoryLoading = true;
         state.categoryError = null;
